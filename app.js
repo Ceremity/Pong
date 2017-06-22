@@ -64,6 +64,8 @@ var Player = function(id, name){
                 //console.log(self.y + " + " + self.paddleHeight + " > " + GAME_HEIGHT);
                 //self.y = GAME_HEIGHT - self.PADDLE_HEIGHT;
                 // TODO: Figure out why the line above sets self.y to NaN!! Do not want to keep this hardcoded
+                // still figureout
+
                 self.y = 525; 
                 //console.log(self.y + " = " + GAME_HEIGHT + " - " + self.paddleHeight)
             }
