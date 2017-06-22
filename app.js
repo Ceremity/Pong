@@ -49,7 +49,6 @@ var Player = function(id, name){
     self.update = function() {
 
         // Update paddle location based on user input
-
         if (self.pressingUp) {
             self.y -= self.paddleSpeed;
 
@@ -61,33 +60,28 @@ var Player = function(id, name){
             self.y += self.paddleSpeed;
             
             if (self.y + self.paddleHeight > GAME_HEIGHT) {
-                //console.log(self.y + " + " + self.paddleHeight + " > " + GAME_HEIGHT);
-                //self.y = GAME_HEIGHT - self.PADDLE_HEIGHT;
-                // TODO: Figure out why the line above sets self.y to NaN!! Do not want to keep this hardcoded
-                // still figureout
-
-                self.y = 525; 
-                //console.log(self.y + " = " + GAME_HEIGHT + " - " + self.paddleHeight)
+                self.y = GAME_HEIGHT - self.paddleHeight;
             }
-        }
-
-        self.collidesWithBall = function(ballX, ballY) {
-            // TODO: take into account ball size for more accurate collission detection
-            // IF ball is above top of paddle and below bottom of paddle
-            if (ballX > self.x && 
-                ballX < self.x + self.paddleWidth) {
-
-                // The ball is in the same x plane as the paddle
-                if (ballY > self.y && 
-                    ballY < self.y + self.paddleHeight) {
-                    // The ball is in the same y plane as the paddle so collides!
-                    return true;
-                }
-            }
-
-            return false;
         }
     }
+
+    self.collidesWithBall = function(ballX, ballY) {
+        // TODO: take into account ball size for more accurate collission detection
+        // IF ball is above top of paddle and below bottom of paddle
+        if (ballX > self.x && 
+            ballX < self.x + self.paddleWidth) {
+
+            // The ball is in the same x plane as the paddle
+            if (ballY > self.y && 
+                ballY < self.y + self.paddleHeight) {
+                // The ball is in the same y plane as the paddle so collides!
+                return true;
+            }
+        }
+
+        return false;
+    }
+    
 
     return self;
 }
@@ -155,7 +149,6 @@ var Game = function(player1,player2){
         self.player1.update();
         self.player2.update();
 
-        // TODO: Collission Detection Paddle
         if (self.player1.collidesWithBall(self.ballX, self.ballY))
             self.ballSpeedX = -self.ballSpeedX;
 
@@ -235,7 +228,7 @@ io.sockets.on('connection', function(socket){
             if (data.input === 'up') {
                 player.pressingUp = data.state;
             }
-             if (data.input === 'down') {
+            if (data.input === 'down') {
                 player.pressingDown = data.state;
             }
         
@@ -270,7 +263,7 @@ io.sockets.on('connection', function(socket){
 
 });
 
-// Server game loop; Call 25 times per second
+// Server game loop; Call 30 times per second
 setInterval(loop, 1000/30);
 
 function loop() {
