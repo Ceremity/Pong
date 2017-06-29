@@ -1,11 +1,20 @@
-Pong game
-<br />
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js'></script>
+    <script src="/client/js/client.js"></script>
+    <script src="/client/js/DrawHandler.js"></script>
+  </head>
 
-Name: <input id="name" type="text"> <button onclick='join()'>join</button>
+  <body>
+    Pong game
+    <br/>
 
-<br /><br />
-<canvas id="ctx" width="800" height="600"></canvas>
+    Name: <input id="name" type="text">
+    <button onclick='join()'>join</button>
 
-<script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js'></script>
-<script src="/client/js/client.js"></script>
+    <br/><br/>
 
+    <canvas id="ctx" width="800" height="600"></canvas>
+  </body>
+</html>
