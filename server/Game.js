@@ -76,8 +76,8 @@ Game.prototype.update = function() {
 Game.prototype.reset = function() {
 
   // TODO: After a point is scored, reset for next point
-  this.ballX = Constants.GAME_WIDTH / 2 - Constants.BALL_SIZE / 2;
-  this.ballY = Constants.GAME_HEIGHT / 2 - Constants.BALL_SIZE / 2;
+  this.ball.x = Constants.GAME_WIDTH / 2 - Constants.BALL_SIZE / 2;
+  this.ball.y = Constants.GAME_HEIGHT / 2 - Constants.BALL_SIZE / 2;
 };
 
 Game.prototype.emit = function() {

@@ -23,7 +23,7 @@ function join() {
 
   var n = document.getElementById('name').value;
   socket.emit('join', { name: n });
-  
+
   socket.on('game', function(game) {
 
     draw(game);
@@ -81,11 +81,11 @@ function drawPlaying(game) {
   drawDivider();
 
   // Draw ball
-  drawCircle(game.ballX, game.ballY, game.ballSize, GAME_BALL_COLOR);
+  drawCircle(game.ball.x, game.ball.y, game.ball.size, GAME_BALL_COLOR);
 
   // Draw paddles
-  drawRect(game.player1.x, game.player1.y, game.player1.paddleWidth, game.player1.paddleHeight, GAME_PADDLE_COLOR);
-  drawRect(game.player2.x, game.player2.y, game.player2.paddleWidth, game.player2.paddleHeight, GAME_PADDLE_COLOR);
+  drawRect(game.player1.x, game.player1.y, game.player1.width, game.player1.height, GAME_PADDLE_COLOR);
+  drawRect(game.player2.x, game.player2.y, game.player2.width, game.player2.height, GAME_PADDLE_COLOR);
 
   // Draw names
   drawNames(game.player1.name, game.player2.name);

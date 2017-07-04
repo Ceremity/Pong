@@ -2,6 +2,7 @@
 require('../app.js');
 var Player = require('./Player.js');
 var Game = require('./Game.js');
+var Constants = require('./GameConstants.js');
 
 /**
  * Initialize Express server
@@ -79,20 +80,17 @@ exports.initSocket = function() {
               if (player.gameId !== null) {
                   // This player was in a game, so we need to let the other player know and give them an auto-win!
                   var game = games[player.gameId];
-                  game.gameState = GameStateEnum.GAMEOVER;
+                  game.gameState = Constants.GAMEOVER;
                   game.loser = player.id;
               }
 
 
               // TODO: when a player leaves make sure they are removed from being drawn on screen
 
-
               console.log('[' + socket.id + '] ' + player.name + ' disconnected.');
               delete sockets[socket.id];
               delete players[socket.id];
-          }
-          else
-          {
+          } else {
               console.log('[' + socket.id + '] Unknown disconnected.');
               delete sockets[socket.id];
           }

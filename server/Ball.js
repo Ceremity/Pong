@@ -6,8 +6,8 @@ var Ball = function(x, y) {
   this.x = x;
   this.y = y;
 
-  this.xVelocity = Constants.BALL_SPEED;
-  this.yVelocity = Constants.BALL_SPEED;
+  this.xVelocity = Math.random(Constants.BALL_SPEED) + 2;
+  this.yVelocity = Math.random(Constants.BALL_SPEED) + 2;
 
   this.size = Constants.BALL_SIZE;
 };
