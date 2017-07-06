@@ -12,8 +12,9 @@ app.get('/', function(req, res) {
 app.use('/client', express.static(__dirname + '/client'));
 
 // Start server to listen on port 3000 for requests
-serv.listen(3000);
-console.log('Server listening on port 3000...')
+var port=process.env.PORT || 3000;
+serv.listen(port);
+console.log('Server listening on port '+ port + '...');
 
 // UUID
 const uuidV4 = require('uuid/v4');
