@@ -1,13 +1,17 @@
 {
   "name": "pong",
   "version": "1.0.0",
-  "description": "",
+  "description": "Multiplayer pong game built in NodeJS",
   "main": "app.js",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.15.3",
+    "socket.io": "^2.0.3",
+    "uuid": "^3.1.0"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "Ceremity",
   "license": "ISC"
 }
