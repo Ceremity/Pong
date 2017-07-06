@@ -1,4 +1,5 @@
-var ctx = document.getElementById('ctx').getContext('2d');
+var canvas = document.getElementById('ctx');
+var ctx = canvas.getContext('2d');
 
 var socket = io();
 
@@ -25,16 +26,34 @@ socket.on('game', function(game){
 // User input
 document.onkeydown = function(event){
     if (event.keyCode === 38) 
-        socket.emit('keyPress', { input: 'up', state : true} )
+        socket.emit('keyPress', { input: 'up', state : true} );
      if (event.keyCode === 40) 
-        socket.emit('keyPress', { input: 'down', state : true} )
+        socket.emit('keyPress', { input: 'down', state : true} );
 }
 document.onkeyup = function(event){
     if (event.keyCode === 38) 
-        socket.emit('keyPress', { input: 'up', state : false} )
+        socket.emit('keyPress', { input: 'up', state : false} );
      if (event.keyCode === 40) 
-        socket.emit('keyPress', { input: 'down', state : false} )
+        socket.emit('keyPress', { input: 'down', state : false} );
 }
+
+// Touch support
+canvas.addEventListener("touchstart", function(e){
+    if (e.targetTouches.length == 1) {
+        var touch = e.targetTouches[0];
+        if (touch.pageY < GAME_HEIGHT / 2) {
+            socket.emit('keyPress', { input: 'up', state : true} );
+        }
+        else {
+            socket.emit('keyPress', { input: 'down', state : true} );
+        }
+    }
+}, false);
+
+canvas.addEventListener("touchend", function(e){
+    socket.emit('keyPress', { input: 'up', state : false} );
+    socket.emit('keyPress', { input: 'down', state : false} );
+}, false);
 
 function draw(game) {
     switch (game.gameState) {
