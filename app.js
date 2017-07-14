@@ -1,7 +1,6 @@
 
 /* importing modules */
 var ConnectionHandler = require('./server/ConnectionHandler.js');
-// var Game = require('./server/Game.js');
 
 sockets = {}; // socket connections to the server
 players = {}; // all players

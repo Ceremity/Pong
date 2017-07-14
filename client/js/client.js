@@ -30,26 +30,6 @@ function join() {
   });
 }
 
-
-/* user input */
-document.onkeydown = function(event) {
-
-  if (event.keyCode === 38)
-      socket.emit('keyPress', { input: 'up', state : true})
-
-  if (event.keyCode === 40)
-      socket.emit('keyPress', { input: 'down', state : true})
-}
-
-document.onkeyup = function(event) {
-
-  if (event.keyCode === 38)
-    socket.emit('keyPress', { input: 'up', state : false})
-
-  if (event.keyCode === 40)
-    socket.emit('keyPress', { input: 'down', state : false})
-}
-
 function draw(game) {
 
   switch (game.gameState) {

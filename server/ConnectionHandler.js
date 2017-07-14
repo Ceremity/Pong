@@ -20,8 +20,10 @@ exports.initServer = function(dir) {
 
   app.use('/client', express.static(dir + '/client'));
 
-  serv.listen(3000); // Start server to listen on port 3000 for requests
-  console.log('Server listening on port 3000...');
+  /* Start server to listen on port 3000 for requests */
+  var port = process.env.PORT || 3000;
+  serv.listen(port);
+  console.log('Server listening...');
 };
 
 
