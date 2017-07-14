@@ -86,10 +86,10 @@ Game.prototype.emit = function() {
   var s1 = sockets[this.player1.id];
   var s2 = sockets[this.player2.id];
 
-  if (s1 !== null)
+  if (s1 != null)
     s1.emit('game', this);
 
-  if (s2 !== null)
+  if (s2 != null)
     s2.emit('game', this);
 };
 
