@@ -4,6 +4,8 @@ var Player = require('./Player.js');
 var Game = require('./Game.js');
 var Constants = require('./GameConstants.js');
 
+var io;
+
 /**
  * Initialize Express server
  */
@@ -24,6 +26,7 @@ exports.initServer = function(dir) {
   var port = process.env.PORT || 3000;
   serv.listen(port);
   console.log('Server listening...');
+  io = require('socket.io')(serv, {});
 };
 
 
@@ -31,7 +34,6 @@ exports.initServer = function(dir) {
  * Initialize Socket.io connections
  */
 exports.initSocket = function() {
-  var io = require('socket.io')(serv, {});
 
   io.sockets.on('connection', function(socket) {
 
