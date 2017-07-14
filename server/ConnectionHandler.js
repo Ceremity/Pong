@@ -62,7 +62,7 @@ exports.initSocket = function() {
 
       socket.on('keyPress', function(data){
 
-          if (players[socket.id] !== null) {
+          if (players[socket.id] != null) {
               var player = players[socket.id];
 
               if (data.input === 'up') {
@@ -77,24 +77,25 @@ exports.initSocket = function() {
 
       socket.on('disconnect', function(data){
 
-          if (players[socket.id] !== null) {
-              var player = players[socket.id];
-              if (player.gameId !== null) {
-                  // This player was in a game, so we need to let the other player know and give them an auto-win!
-                  var game = games[player.gameId];
-                  game.gameState = Constants.GAMEOVER;
-                  game.loser = player.id;
-              }
+          if (players[socket.id] != null) {
 
+            var player = players[socket.id];
 
-              // TODO: when a player leaves make sure they are removed from being drawn on screen
+            if (player != null && player.gameId != null) {
+                // This player was in a game, so we need to let the other player know and give them an auto-win!
+                var game = games[player.gameId];
+                game.gameState = Constants.GAMEOVER;
+                game.loser = player.id;
+            }
 
-              console.log('[' + socket.id + '] ' + player.name + ' disconnected.');
-              delete sockets[socket.id];
-              delete players[socket.id];
+            // TODO: when a player leaves make sure they are removed from being drawn on screen
+
+            console.log('[' + socket.id + '] ' + player.name + ' disconnected.');
+            delete sockets[socket.id];
+            delete players[socket.id];
           } else {
-              console.log('[' + socket.id + '] Unknown disconnected.');
-              delete sockets[socket.id];
+            console.log('[' + socket.id + '] Unknown disconnected.');
+            delete sockets[socket.id];
           }
       });
 
