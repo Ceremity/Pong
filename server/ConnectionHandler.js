@@ -85,16 +85,15 @@ exports.initSocket = function() {
             if (player != null && player.gameId != null) {
                 // This player was in a game, so we need to let the other player know and give them an auto-win!
                 var game = games[player.gameId];
-                game.gameState = Constants.GAMEOVER;
-                game.loser = player.id;
-            }
 
-            // TODO: when a player leaves make sure they are removed from being drawn on screen
+                var winner = (player === game.player1) ? game.player2 : game.player1;
+                game.end(winner);
+            }
 
             console.log('[' + socket.id + '] ' + player.name + ' disconnected.');
             delete sockets[socket.id];
-            delete players[socket.id];
           } else {
+            
             console.log('[' + socket.id + '] Unknown disconnected.');
             delete sockets[socket.id];
           }

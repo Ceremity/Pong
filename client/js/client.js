@@ -9,6 +9,9 @@ const GAME_BALL_COLOR = "#74C265";
 const GAME_PADDLE_COLOR = "#74C265";
 const GAME_TEXT_COLOR = "#74C265";
 
+const PREGAME_TIME = 3;
+const UPDATES_PER_SECOND = 30;
+
 var GameStateEnum = Object.freeze({GAMESTART: 0, PLAYING: 1, GAMEOVER: 2});
 
 window.onload = function() {
@@ -35,6 +38,7 @@ function draw(game) {
   switch (game.gameState) {
 
     case GameStateEnum.GAMESTART:
+      drawPre(game.countDown);
       break;
 
     case GameStateEnum.PLAYING:
@@ -42,6 +46,8 @@ function draw(game) {
       break;
 
     case GameStateEnum.GAMEOVER:
+      drawPlaying(game);
+      drawPost(game.winner);
       break;
 
     default:
@@ -49,10 +55,29 @@ function draw(game) {
   }
 }
 
+function drawPost(winner) {
+
+  ctx.textAlign = "center";
+
+  drawText(winner.name + " wins!", GAME_WIDTH / 2, GAME_HEIGHT / 2, GAME_TEXT_COLOR, 100);
+}
+
+function drawPre(time) {
+
+  var t = Math.floor(time / UPDATES_PER_SECOND);
+  
+  ctx.textAlign = "center";
+
+  drawRect(0, 0, GAME_WIDTH, GAME_HEIGHT, GAME_BACKGROUND_COLOR);
+  drawText(PREGAME_TIME - t, GAME_WIDTH / 2, GAME_HEIGHT / 2, GAME_TEXT_COLOR, 200);
+}
+
 function drawPlaying(game) {
 
+  ctx.textAlign = "left";
+
   // Clear screen
-  ctx.clearRect(0,0,GAME_WIDTH,GAME_HEIGHT);
+  ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
 
   // Draw background
   drawRect(0, 0, GAME_WIDTH, GAME_HEIGHT, GAME_BACKGROUND_COLOR);

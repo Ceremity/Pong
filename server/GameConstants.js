@@ -1,4 +1,8 @@
 
+
+exports.PREGAME_TIME = 3; // seconds
+exports.UPDATES_PER_SECOND = 30;
+
 exports.GAME_WIDTH = 800;
 exports.GAME_HEIGHT = 600;
 
@@ -9,4 +13,6 @@ exports.BALL_SIZE = 5;
 exports.PADDLE_SPEED = 7;
 exports.BALL_SPEED = 7;
 
-exports.gameStates = Object.freeze( { GAMESTART: 0, PLAYING: 1, GAMEOVER: 2 } );
+exports.WINNING_SCORE = 11;
+
+exports.GAME_STATES = Object.freeze( { GAMESTART: 0, PLAYING: 1, GAMEOVER: 2 } );

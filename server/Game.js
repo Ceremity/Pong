@@ -10,7 +10,8 @@ var Game = function(player1, player2) {
   this.player1 = player1;
   this.player2 = player2;
 
-  this.gameState = Constants.gameStates.GAMESTART;
+  this.gameState = Constants.GAME_STATES.GAMESTART;
+  this.countDown = 0;
   this.winner = null;
 
   this.ball = null;
@@ -33,51 +34,53 @@ Game.prototype.init = function() {
   this.player2.paddleSpeed = Constants.GAME_PADDLE_SPEED;
 
   /* initialize ball */
-  var middle = Constants.GAME_WIDTH / 2;
-  var center = Constants.GAME_HEIGHT / 2;
-  this.ball = new Ball(middle, center);
-
-  /* begin */
-  this.gameState = Constants.gameStates.PLAYING;
+  this.ball = new Ball();
 };
 
 Game.prototype.update = function() {
 
-  // Update Ball
-  this.ball.update();
+  switch (this.gameState) {
 
-  // Update paddles
-  this.player1.update();
-  this.player2.update();
+    case (Constants.GAME_STATES.GAMESTART):
+      if (++this.countDown >= Constants.PREGAME_TIME * Constants.UPDATES_PER_SECOND)
+        this.gameState = Constants.GAME_STATES.PLAYING;
+      break;
 
-  if (this.player1.collidesWith(this.ball) || this.player2.collidesWith(this.ball))
-    // rebound off paddle
-    this.ball.xVelocity *= -1;
+    case (Constants.GAME_STATES.PLAYING):
 
-  if (this.ball.x > Constants.GAME_WIDTH) {
-    // offscreen
+      // Update paddles
+      this.player1.update();
+      this.player2.update();
 
-    this.player1.score++;
-    this.reset();
+      // Update Ball
+      var side = this.ball.update(this.player1, this.player2);
+
+      if (side > 0) {
+
+        if (++this.player1.score >= Constants.WINNING_SCORE)
+          this.end(this.player1);
+      } else if (side < 0) {
+
+        if (++this.player2.score >= Constants.WINNING_SCORE)
+          this.end(this.player2);
+      }
+      break;
+
+    case (Constants.GAME_STATES.GAMEOVER):
+      /* not much is needed here, for now */
+      break;
+
+    default:
+      console.log("Invalid gamestate");
+      break;
   }
 
-  if (this.ball.x < 0) {
-    // offscreen
-
-    this.player2.score++;
-    this.reset();
-  }
-
-  if (this.ball.y > Constants.GAME_HEIGHT || this.ball.y < 0)
-    // rebound off sides
-    this.ball.yVelocity *= -1;
 };
 
-Game.prototype.reset = function() {
+Game.prototype.end = function(winner) {
 
-  // TODO: After a point is scored, reset for next point
-  this.ball.x = Constants.GAME_WIDTH / 2 - Constants.BALL_SIZE / 2;
-  this.ball.y = Constants.GAME_HEIGHT / 2 - Constants.BALL_SIZE / 2;
+  this.winner = winner;
+  this.gameState = Constants.GAME_STATES.GAMEOVER;
 };
 
 Game.prototype.emit = function() {
