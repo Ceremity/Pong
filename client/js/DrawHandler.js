@@ -1,14 +1,14 @@
 
 function drawDivider() {
 
-  ctx.strokeStyle = GAME_TEXT_COLOR;
+  ctx.strokeStyle = TEXT_COLOR;
   var lineHeight = 20;
 
-  for (var y = lineHeight / 2; y < GAME_HEIGHT; y += lineHeight * 2){
+  for (var y = lineHeight / 2; y < HEIGHT; y += lineHeight * 2){
 
     ctx.beginPath();
-    ctx.moveTo(GAME_WIDTH / 2, y);
-    ctx.lineTo(GAME_WIDTH / 2, y + lineHeight);
+    ctx.moveTo(WIDTH / 2, y);
+    ctx.lineTo(WIDTH / 2, y + lineHeight);
     ctx.stroke();
   }
 
@@ -17,17 +17,17 @@ function drawDivider() {
 function drawNames(player1Name, player2Name) {
 
   ctx.textAlign = "left";
-  drawText(player1Name, 10, 25, GAME_TEXT_COLOR, 20, 100);
+  drawText(player1Name, 10, 25, TEXT_COLOR, 20, 100);
   ctx.textAlign = "right";
-  drawText(player2Name, GAME_WIDTH - 10, 25, GAME_TEXT_COLOR, 20, 100);
+  drawText(player2Name, WIDTH - 10, 25, TEXT_COLOR, 20, 100);
 }
 
 function drawScores(player1Score, player2Score) {
 
   ctx.textAlign = "right";
-  drawText(player1Score, GAME_WIDTH / 2 - 50, 40, GAME_TEXT_COLOR, 40, 100);
+  drawText(player1Score, WIDTH / 2 - 50, 40, TEXT_COLOR, 40, 100);
   ctx.textAlign = "left";
-  drawText(player2Score, GAME_WIDTH / 2 + 50, 40, GAME_TEXT_COLOR, 40, 100);
+  drawText(player2Score, WIDTH / 2 + 50, 40, TEXT_COLOR, 40, 100);
 }
 
 function drawText(text, x, y, textColor, fontSize, maxWidth) {
@@ -44,6 +44,14 @@ function drawText(text, x, y, textColor, fontSize, maxWidth) {
     ctx.fillText(text, x, y, maxWidth);
   }
 
+}
+
+function drawPower(power) {
+
+  drawCircle(power.x, power.y, POWER_SIZE, TEXT_COLOR);
+
+  ctx.textAlign = "center";
+  drawText(power.type, power.x, power.y, BACKGROUND_COLOR, 20);
 }
 
 function drawRect(x, y, width, height, color) {

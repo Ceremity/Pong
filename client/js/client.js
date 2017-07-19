@@ -2,15 +2,18 @@
 var ctx;
 var socket;
 
-const GAME_WIDTH = 800;
-const GAME_HEIGHT = 600;
-const GAME_BACKGROUND_COLOR = "#173917";
-const GAME_BALL_COLOR = "#74C265";
-const GAME_PADDLE_COLOR = "#74C265";
-const GAME_TEXT_COLOR = "#74C265";
+const WIDTH = 800;
+const HEIGHT = 600;
+const BACKGROUND_COLOR = "#173917";
+const BALL_COLOR = "#74C265";
+const PADDLE_COLOR = "#74C265";
+const TEXT_COLOR = "#74C265";
+
+const POWER_SIZE = 25;
 
 const PREGAME_TIME = 3;
 const UPDATES_PER_SECOND = 30;
+var POWERS = Object.freeze( { B_SPEED: "BS", P_SPEED: "PS" } );
 
 var GameStateEnum = Object.freeze({GAMESTART: 0, PLAYING: 1, GAMEOVER: 2});
 
@@ -59,17 +62,17 @@ function drawPost(winner) {
 
   ctx.textAlign = "center";
 
-  drawText(winner.name + " wins!", GAME_WIDTH / 2, GAME_HEIGHT / 2, GAME_TEXT_COLOR, 100);
+  drawText(winner.name + " wins!", WIDTH / 2, HEIGHT / 2, TEXT_COLOR, 100);
 }
 
 function drawPre(time) {
 
   var t = Math.floor(time / UPDATES_PER_SECOND);
-  
+
   ctx.textAlign = "center";
 
-  drawRect(0, 0, GAME_WIDTH, GAME_HEIGHT, GAME_BACKGROUND_COLOR);
-  drawText(PREGAME_TIME - t, GAME_WIDTH / 2, GAME_HEIGHT / 2, GAME_TEXT_COLOR, 200);
+  drawRect(0, 0, WIDTH, HEIGHT, BACKGROUND_COLOR);
+  drawText(PREGAME_TIME - t, WIDTH / 2, HEIGHT / 2, TEXT_COLOR, 200);
 }
 
 function drawPlaying(game) {
@@ -77,20 +80,25 @@ function drawPlaying(game) {
   ctx.textAlign = "left";
 
   // Clear screen
-  ctx.clearRect(0, 0, GAME_WIDTH, GAME_HEIGHT);
+  ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
   // Draw background
-  drawRect(0, 0, GAME_WIDTH, GAME_HEIGHT, GAME_BACKGROUND_COLOR);
+  drawRect(0, 0, WIDTH, HEIGHT, BACKGROUND_COLOR);
 
   // Draw divider
   drawDivider();
 
-  // Draw ball
-  drawCircle(game.ball.x, game.ball.y, game.ball.size, GAME_BALL_COLOR);
+  // Draw balls
+  for (var i = 0; i < game.balls.length; i++)
+    drawCircle(game.balls[i].x, game.balls[i].y, game.balls[i].size, BALL_COLOR);
+
+  // Draw powers
+  for (var i = 0; i < game.powers.length; i++)
+    drawPower(game.powers[i])
 
   // Draw paddles
-  drawRect(game.player1.x, game.player1.y, game.player1.width, game.player1.height, GAME_PADDLE_COLOR);
-  drawRect(game.player2.x, game.player2.y, game.player2.width, game.player2.height, GAME_PADDLE_COLOR);
+  drawRect(game.player1.x, game.player1.y, game.player1.width, game.player1.height, PADDLE_COLOR);
+  drawRect(game.player2.x, game.player2.y, game.player2.width, game.player2.height, PADDLE_COLOR);
 
   // Draw names
   drawNames(game.player1.name, game.player2.name);

@@ -1,6 +1,7 @@
 
 var Constants = require('./GameConstants.js');
 var Ball = require('./Ball.js');
+var Power = require('./Power.js');
 var uuidV4 = require('uuid/v4');
 
 var Game = function(player1, player2) {
@@ -14,7 +15,9 @@ var Game = function(player1, player2) {
   this.countDown = 0;
   this.winner = null;
 
-  this.ball = null;
+  this.powers = [];
+
+  this.balls = [];
 };
 
 Game.prototype.init = function() {
@@ -34,7 +37,7 @@ Game.prototype.init = function() {
   this.player2.paddleSpeed = Constants.GAME_PADDLE_SPEED;
 
   /* initialize ball */
-  this.ball = new Ball();
+  this.balls.push(new Ball());
 };
 
 Game.prototype.update = function() {
@@ -52,17 +55,31 @@ Game.prototype.update = function() {
       this.player1.update();
       this.player2.update();
 
-      // Update Ball
-      var side = this.ball.update(this.player1, this.player2);
+      if (Math.random() < 0.001) {
 
-      if (side > 0) {
+        var x = Math.random() * Constants.GAME_WIDTH;
+        var y = Math.random() * Constants.GAME_HEIGHT;
 
-        if (++this.player1.score >= Constants.WINNING_SCORE)
-          this.end(this.player1);
-      } else if (side < 0) {
+        var p = new Power(x, y, Constants.POWERS.B_SPEED, this);
 
-        if (++this.player2.score >= Constants.WINNING_SCORE)
-          this.end(this.player2);
+        this.powers.push(p);
+        console.log(p);
+      }
+
+      // Update Balls
+      for (var i = 0; i < this.balls.length; i++) {
+
+        var side = this.balls[i].update(this.player1, this.player2);
+
+        if (side > 0) {
+
+          if (++this.player1.score >= Constants.WINNING_SCORE)
+            this.end(this.player1);
+        } else if (side < 0) {
+
+          if (++this.player2.score >= Constants.WINNING_SCORE)
+            this.end(this.player2);
+        }
       }
       break;
 
