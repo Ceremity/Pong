@@ -12,8 +12,7 @@ ConnectionHandler.initServer(__dirname);
 ConnectionHandler.initSocket();
 
 // Server game loop; Call 30 times per second
-var interval = 1000 / Constants.UPDATES_PER_SECOND;
-setInterval(loop, interval);
+setInterval(loop, Constants.SECONDS_PER_FRAME);
 
 function loop() {
 

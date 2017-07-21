@@ -42,7 +42,7 @@ Player.prototype.update = function() {
 
 Player.prototype.collidesWith = function(ball) {
 
-  // TODO: take into account ball size for more accurate collission detection
+  // take into account ball size for more accurate collission detection
   // IF ball is above top of paddle and below bottom of paddle
   if (ball.x > this.x && ball.x < this.x +  this.width) {
 

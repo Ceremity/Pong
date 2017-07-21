@@ -10,6 +10,8 @@ var Ball = function(x, y) {
   this.yVelocity = Constants.BALL_SPEED;
 
   this.size = Constants.BALL_SIZE;
+
+  this.hitByPlayerId = null;
 };
 
 Ball.prototype.update = function(player1, player2) {
@@ -17,10 +19,16 @@ Ball.prototype.update = function(player1, player2) {
   this.x += this.xVelocity;
   this.y += this.yVelocity;
 
-  if (player1.collidesWith(this) || player2.collidesWith(this)) {
+  if (player1.collidesWith(this)) {
 
     // rebound off paddle
     this.xVelocity *= -1;
+    this.hitByPlayerId = player1.id;
+  } else if (player2.collidesWith(this)) {
+
+    // rebound off paddle
+    this.xVelocity *= -1;
+    this.hitByPlayerId = player2.id;
   }
 
   if (this.y > Constants.GAME_HEIGHT || this.y < 0) {
