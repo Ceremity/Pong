@@ -1,8 +1,11 @@
 
+var uuidV4 = require('uuid/v4');
 var Constants = require('./GameConstants.js');
 
 var Ball = function(x, y) {
 
+  this.id = uuidV4();
+  
   this.x = Constants.GAME_WIDTH / 2;
   this.y = Constants.GAME_HEIGHT / 2;
 

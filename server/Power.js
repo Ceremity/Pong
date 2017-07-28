@@ -1,8 +1,9 @@
 
 var Constants = require('./GameConstants.js');
 
-var Power = function(x, y, name, abbr, expireTime) {
+var Power = function(id, x, y, name, abbr, expireTime) {
 
+  this.id = id;
   this.name = name;
 
   this.x = x;
@@ -13,8 +14,10 @@ var Power = function(x, y, name, abbr, expireTime) {
 
   this.abbr = abbr;
 
-  this.targetPlayerId = null;
-  this.applied = false; // Whether or not the power has been applied to a player yet
+  this.size = Constants.POWER_SIZE;
+
+  this.targetPlayers = [];
+  this.targetBalls = [];
 
   this.state = 0; // 0 = spawned, 1 = activated, 2 = expired
 };
@@ -25,7 +28,7 @@ Power.prototype.update = function() {
 
   switch (this.state) {
 
-    case 0: 
+    case 0:
       this.performSpawned();
       break;
 
@@ -68,10 +71,35 @@ Power.prototype.performExpired = function() {
 
 Power.prototype.collidesWithBall = function(ball) {
 
-  // if ball collides
-  // call apply
+  var dx = this.x - ball.x;
+  var dy = this.y - ball.y;
 
-  return false; // TODO: calculate collision
+  var distance = Math.sqrt(dx * dx + dy * dy);
+
+  return (distance < this.size + ball.size); // collision!
+};
+
+Power.prototype.collidesWithBalls = function(balls) {
+
+  for (var i in balls) {
+
+    var ball = balls[i];
+    if (this.collidesWithBall(ball)) {
+
+      if (this.targetBalls.indexOf(ball.id) !== -1)  { // don't target the same ball more than once
+
+        this.targetBalls.push(ball.id);
+      }
+
+      if (this.targetPlayers.indexOf(ball.hitByPlayerId) !== -1)  { // don't target the same player more than once
+
+        this.state = 1; // activate power
+        this.targetPlayers.push(ball.hitByPlayerId);
+      }
+    }
+  }
+
+  return (this.targetPlayers.length > 0);
 };
 
 module.exports = Power;

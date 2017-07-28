@@ -17,22 +17,31 @@ exports.WINNING_SCORE = 11;
 
 exports.GAME_STATES = Object.freeze( { GAMESTART: 0, PLAYING: 1, GAMEOVER: 2 } );
 
+exports.POWER_SIZE = 10;
+
+// TODO: make this a dictionary, so we may look powers up by key
 exports.POWERS = [
 
   {
+    id: 0,
     name: "Ball Speed",
     abbr: "BS",
     expireTime: 0,
-    spawnProbability: 0.2
-  
+    spawnProbability: 0.2,
+
+    params: {
+      
+      increaseBy: 2,
+      decreaseBy: -2
+    }
   },
 
   {
-    name: "Increase Size",
-    abbr: "IS",
+    id: 1,
+    name: "Increased Paddle",
+    abbr: "IP",
     expireTime: 20, // seconds
     spawnProbability: 0.5
 
   }
 ];
-exports.POWER_SIZE = 25;
