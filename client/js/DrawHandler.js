@@ -48,10 +48,10 @@ function drawText(text, x, y, textColor, fontSize, maxWidth) {
 
 function drawPower(power) {
 
-  drawCircle(power.x, power.y, POWER_SIZE, TEXT_COLOR);
+  drawCircle(power.x, power.y, power.size, TEXT_COLOR);
 
   ctx.textAlign = "center";
-  drawText(power.type, power.x, power.y, BACKGROUND_COLOR, 20);
+  drawText(power.abbr, power.x, power.y, BACKGROUND_COLOR, 10);
 }
 
 function drawRect(x, y, width, height, color) {

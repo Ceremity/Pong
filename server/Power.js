@@ -76,7 +76,7 @@ Power.prototype.collidesWithBall = function(ball) {
 
   var distance = Math.sqrt(dx * dx + dy * dy);
 
-  return (distance < this.size + ball.size); // collision!
+  return (distance < (this.size + ball.size)); // collision!
 };
 
 Power.prototype.collidesWithBalls = function(balls) {
@@ -86,15 +86,22 @@ Power.prototype.collidesWithBalls = function(balls) {
     var ball = balls[i];
     if (this.collidesWithBall(ball)) {
 
-      if (this.targetBalls.indexOf(ball.id) !== -1)  { // don't target the same ball more than once
+      console.log("collided");
+
+      console.log("Players: " + this.targetPlayers.length);
+
+      console.log("balls: " + this.targetBalls.length + "ball Id: " + ball.id + " " + this.targetBalls.indexOf(ball.id));
+
+      if (this.targetBalls.indexOf(ball.id) == -1)  { // don't target the same ball more than once
 
         this.targetBalls.push(ball.id);
       }
 
-      if (this.targetPlayers.indexOf(ball.hitByPlayerId) !== -1)  { // don't target the same player more than once
+      if (this.targetPlayers.indexOf(ball.hitByPlayerId) == -1)  { // don't target the same player more than once
 
         this.state = 1; // activate power
         this.targetPlayers.push(ball.hitByPlayerId);
+        console.log("power " + this.name + ", id: " + this.id + " activated");
       }
     }
   }

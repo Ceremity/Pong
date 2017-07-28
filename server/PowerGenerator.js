@@ -16,14 +16,14 @@ var PowerGenerator = function() {
 
 // Public
 PowerGenerator.prototype.update = function() {
-  if (state === 1) { // if on
+  if (this.state === 1) { // if on
     this.handleTime();
     this.spawn();
     this.updatePowers();
   }
 };
 
-PowerGenerator.prototype.removePower() = function(power) {
+PowerGenerator.prototype.removePower = function(power) {
  if (power.state === 2)  { // if expired
     // Remove from powers array
     var index = this.powers.indexOf(power);
@@ -34,7 +34,7 @@ PowerGenerator.prototype.removePower() = function(power) {
 }
 
 // Private Methods
-PowerGenerator.prototype.handleTime() = function() {
+PowerGenerator.prototype.handleTime = function() {
  this.elapsedTime += Constants.SECONDS_PER_FRAME;
 }
 
@@ -46,9 +46,11 @@ PowerGenerator.prototype.spawn = function () {
   this.elapsedTime = 0; // reset time and spawn!
 
   for (var i = 0; i < Constants.POWERS.length; i++) {
+
     var power = Constants.POWERS[i];
     var rand = Math.random(); // get number between 0 and 1
-    if (1 - power.spawnProbablity <= rand) { // Should we spawn?
+
+    if (1 - power.spawnProbability <= rand) { // Should we spawn?
 
       // Generate a randrom x,y such that it can only spawn in a rectangle 90% the size of the game width and height
       var minX = Constants.GAME_WIDTH * .1;
@@ -66,7 +68,7 @@ PowerGenerator.prototype.spawn = function () {
   }
 }
 
-PowerGenerator.prototype.updatePowers() = function() {
+PowerGenerator.prototype.updatePowers = function() {
   for (var i = 0; i < this.powers; i++) {
     var power = this.powers[i];
     power.update();

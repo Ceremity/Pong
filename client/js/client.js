@@ -37,22 +37,22 @@ function join() {
 }
 
 // Touch support
-canvas.addEventListener("touchstart", function(e){
-    if (e.targetTouches.length == 1) {
-        var touch = e.targetTouches[0];
-        if (touch.pageY < GAME_HEIGHT / 2) {
-            socket.emit('keyPress', { input: 'up', state : true} );
-        }
-        else {
-            socket.emit('keyPress', { input: 'down', state : true} );
-        }
-    }
-}, false);
+// canvas.addEventListener("touchstart", function(e){
+//     if (e.targetTouches.length == 1) {
+//         var touch = e.targetTouches[0];
+//         if (touch.pageY < GAME_HEIGHT / 2) {
+//             socket.emit('keyPress', { input: 'up', state : true} );
+//         }
+//         else {
+//             socket.emit('keyPress', { input: 'down', state : true} );
+//         }
+//     }
+// }, false);
 
-canvas.addEventListener("touchend", function(e){
-    socket.emit('keyPress', { input: 'up', state : false} );
-    socket.emit('keyPress', { input: 'down', state : false} );
-}, false);
+// canvas.addEventListener("touchend", function(e){
+//     socket.emit('keyPress', { input: 'up', state : false} );
+//     socket.emit('keyPress', { input: 'down', state : false} );
+// }, false);
 
 function draw(game) {
 
@@ -107,12 +107,18 @@ function drawPlaying(game) {
   drawDivider();
 
   // Draw balls
-  for (var i = 0; i < game.balls.length; i++)
+  for (var i in game.balls)
     drawCircle(game.balls[i].x, game.balls[i].y, game.balls[i].size, BALL_COLOR);
 
   // Draw powers
-  for (var i = 0; i < game.powers.length; i++)
-    drawPower(game.powers[i])
+  var powers = game.powerGenerator.powers;
+  for (var i = 0; i < powers.length; i++) {
+
+    if (powers[i].state == 0) {
+
+      drawPower(powers[i]);
+    }
+  }
 
   // Draw paddles
   drawRect(game.player1.x, game.player1.y, game.player1.width, game.player1.height, PADDLE_COLOR);

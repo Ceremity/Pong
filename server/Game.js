@@ -76,19 +76,20 @@ Game.prototype.update = function() {
       // }
 
       // Update Balls
-      for (var i = 0; i < this.balls.length; i++) {
+      for (var i in this.balls) {
 
         var side = this.balls[i].update(this.player1, this.player2);
 
         if (side > 0) {
 
           if (++this.player1.score >= Constants.WINNING_SCORE)
-            this.end(this.player1);
+          this.end(this.player1);
         } else if (side < 0) {
 
           if (++this.player2.score >= Constants.WINNING_SCORE)
-            this.end(this.player2);
+          this.end(this.player2);
         }
+
       }
       break;
 
@@ -145,12 +146,14 @@ Game.prototype.applyPower = function(power, applying) {
 
         if (applying) {
 
-          ball.xVelocity += Constants.POWERS[power.id].params.increaseBy;
-          ball.yVelocity += Constants.POWERS[power.id].params.increaseBy;
+          ball.xVelocity *= Constants.POWERS[power.id].params.increaseBy;
+          ball.yVelocity *= Constants.POWERS[power.id].params.increaseBy;
+
+          console.log("Increased " + power.name + " to " + ball.xVelocity + ", " + ball.yVelocity);
         } else {
 
-          ball.xVelocity += Constants.POWERS[power.id].params.decreaseBy;
-          ball.yVelocity += Constants.POWERS[power.id].params.decreaseBy;
+          ball.xVelocity *= Constants.POWERS[power.id].params.decreaseBy;
+          ball.yVelocity *= Constants.POWERS[power.id].params.decreaseBy;
         }
       }
       break;

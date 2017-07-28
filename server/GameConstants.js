@@ -1,7 +1,7 @@
 
 exports.PREGAME_TIME = 3; // in seconds
 exports.UPDATES_PER_SECOND = 30;
-exports.SECONDS_PER_FRAME = 1000 / UPDATES_PER_SECOND;
+exports.SECONDS_PER_FRAME = 1000 / exports.UPDATES_PER_SECOND;
 
 exports.GAME_WIDTH = 800;
 exports.GAME_HEIGHT = 600;
@@ -27,21 +27,21 @@ exports.POWERS = [
     name: "Ball Speed",
     abbr: "BS",
     expireTime: 0,
-    spawnProbability: 0.2,
+    spawnProbability: 0.02,
 
     params: {
-      
-      increaseBy: 2,
-      decreaseBy: -2
+
+      increaseBy: 1.1,
+      decreaseBy: 0.9
     }
   },
 
-  {
-    id: 1,
-    name: "Increased Paddle",
-    abbr: "IP",
-    expireTime: 20, // seconds
-    spawnProbability: 0.5
-
-  }
+  // {
+  //   id: 1,
+  //   name: "Increased Paddle",
+  //   abbr: "IP",
+  //   expireTime: 20, // seconds
+  //   spawnProbability: 0.01
+  //
+  // }
 ];
