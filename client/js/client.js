@@ -1,40 +1,39 @@
-var canvas = document.getElementById('ctx');
-var ctx = canvas.getContext('2d');
 
-var socket = io();
+var ctx;
+var socket;
 
-const GAME_WIDTH = 800;
-const GAME_HEIGHT = 600;
-const GAME_BACKGROUND_COLOR = "#173917";
-const GAME_BALL_COLOR = "#74C265";
-const GAME_PADDLE_COLOR = "#74C265";
-const GAME_TEXT_COLOR = "#74C265";
+const WIDTH = 800;
+const HEIGHT = 600;
+const BACKGROUND_COLOR = "#173917";
+const BALL_COLOR = "#74C265";
+const PADDLE_COLOR = "#74C265";
+const TEXT_COLOR = "#74C265";
+
+const POWER_SIZE = 25;
+
+const PREGAME_TIME = 3;
+const UPDATES_PER_SECOND = 30;
+var POWERS = Object.freeze( { B_SPEED: "BS", P_SPEED: "PS" } );
+
 var GameStateEnum = Object.freeze({GAMESTART: 0, PLAYING: 1, GAMEOVER: 2});
 
-window.onload = function(){
-    //draw();
+window.onload = function() {
+
+  ctx = document.getElementById('ctx').getContext('2d');
+  ctx.font = '30px Arial';
+
+  socket = io();
 }
 
-function join(){
-    socket.emit('join', { name: document.getElementById('name').value });
-}
+function join() {
 
-socket.on('game', function(game){
-   draw(game); 
-});
+  var n = document.getElementById('name').value;
+  socket.emit('join', { name: n });
 
-// User input
-document.onkeydown = function(event){
-    if (event.keyCode === 38) 
-        socket.emit('keyPress', { input: 'up', state : true} );
-     if (event.keyCode === 40) 
-        socket.emit('keyPress', { input: 'down', state : true} );
-}
-document.onkeyup = function(event){
-    if (event.keyCode === 38) 
-        socket.emit('keyPress', { input: 'up', state : false} );
-     if (event.keyCode === 40) 
-        socket.emit('keyPress', { input: 'down', state : false} );
+  socket.on('game', function(game) {
+
+    draw(game);
+  });
 }
 
 // Touch support
@@ -56,84 +55,72 @@ canvas.addEventListener("touchend", function(e){
 }, false);
 
 function draw(game) {
-    switch (game.gameState) {
-        case GameStateEnum.GAMESTART: break;
-        case GameStateEnum.PLAYING: drawPlaying(game); break;
-        case GameStateEnum.GAMEOVER: break;
-        default: break;
-    }
+
+  switch (game.gameState) {
+
+    case GameStateEnum.GAMESTART:
+      drawPre(game.countDown);
+      break;
+
+    case GameStateEnum.PLAYING:
+      drawPlaying(game);
+      break;
+
+    case GameStateEnum.GAMEOVER:
+      drawPlaying(game);
+      drawPost(game.winner);
+      break;
+
+    default:
+      break;
+  }
+}
+
+function drawPost(winner) {
+
+  ctx.textAlign = "center";
+
+  drawText(winner.name + " wins!", WIDTH / 2, HEIGHT / 2, TEXT_COLOR, 100);
+}
+
+function drawPre(time) {
+
+  var t = Math.floor(time / UPDATES_PER_SECOND);
+
+  ctx.textAlign = "center";
+
+  drawRect(0, 0, WIDTH, HEIGHT, BACKGROUND_COLOR);
+  drawText(PREGAME_TIME - t, WIDTH / 2, HEIGHT / 2, TEXT_COLOR, 200);
 }
 
 function drawPlaying(game) {
-    // Clear screen
-    ctx.clearRect(0,0,GAME_WIDTH,GAME_HEIGHT); 
 
-    // Draw background
-    drawRect(0, 0, GAME_WIDTH, GAME_HEIGHT, GAME_BACKGROUND_COLOR);
+  ctx.textAlign = "left";
 
-    // Draw divider
-    drawDivider();
+  // Clear screen
+  ctx.clearRect(0, 0, WIDTH, HEIGHT);
 
-    // Draw ball
-    drawCircle(game.ballX, game.ballY, game.ballSize, GAME_BALL_COLOR);
+  // Draw background
+  drawRect(0, 0, WIDTH, HEIGHT, BACKGROUND_COLOR);
 
-    // Draw paddles
-    drawRect(game.player1.x, game.player1.y, game.player1.paddleWidth, game.player1.paddleHeight, GAME_PADDLE_COLOR);
-    drawRect(game.player2.x, game.player2.y, game.player2.paddleWidth, game.player2.paddleHeight, GAME_PADDLE_COLOR);
+  // Draw divider
+  drawDivider();
 
-    // Draw names
-    drawNames(game.player1.name, game.player2.name);
+  // Draw balls
+  for (var i = 0; i < game.balls.length; i++)
+    drawCircle(game.balls[i].x, game.balls[i].y, game.balls[i].size, BALL_COLOR);
 
-    // Draw score
-    drawScores(game.player1.score, game.player2.score);
-}
+  // Draw powers
+  for (var i = 0; i < game.powers.length; i++)
+    drawPower(game.powers[i])
 
-function drawDivider(){
-    ctx.strokeStyle = GAME_TEXT_COLOR;
-    var lineHeight = 20;
-    for (var y=lineHeight/2; y < GAME_HEIGHT; y = y + lineHeight*2){
-        ctx.beginPath();
-        ctx.moveTo(GAME_WIDTH / 2, y);
-        ctx.lineTo(GAME_WIDTH / 2, y + lineHeight);
-        ctx.stroke();
-    }
- 
-}
+  // Draw paddles
+  drawRect(game.player1.x, game.player1.y, game.player1.width, game.player1.height, PADDLE_COLOR);
+  drawRect(game.player2.x, game.player2.y, game.player2.width, game.player2.height, PADDLE_COLOR);
 
-function drawNames(player1Name, player2Name) {
-    drawText(player1Name, 10, 25, GAME_TEXT_COLOR, 20, 100);
-    drawText(player2Name, GAME_WIDTH - 100, 25, GAME_TEXT_COLOR, 20, 100);
-}
+  // Draw names
+  drawNames(game.player1.name, game.player2.name);
 
-function drawScores(player1Score, player2Score) {
-    drawText(player1Score, GAME_WIDTH/2 - 70, 40, GAME_TEXT_COLOR, 40, 100);
-    drawText(player2Score, GAME_WIDTH/2 + 50, 40, GAME_TEXT_COLOR, 40, 100);
-}
-
-function drawText(text, x, y, textColor, fontSize, maxWidth) {
-
-    ctx.fillStyle = textColor;
-    if (fontSize === undefined) {
-        fontSize = 12;
-    }
-    ctx.font = fontSize + "px Arial";
-    if (maxWidth === undefined) {
-        ctx.fillText(text, x, y);
-    }
-    else {
-        ctx.fillText(text, x, y, maxWidth);
-    }
-
-}
-
-function drawRect(x, y, width, height, color){
-    ctx.fillStyle = color;
-    ctx.fillRect(x,y,width,height);
-}
-
-function drawCircle(x, y, size, color){
-    ctx.fillStyle = color;
-    ctx.beginPath();
-    ctx.arc(x,y,size, 0, Math.PI*2, true);
-    ctx.fill();
+  // Draw score
+  drawScores(game.player1.score, game.player2.score);
 }

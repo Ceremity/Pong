@@ -1,8 +1,8 @@
 {
   "name": "pong",
   "version": "1.0.0",
-  "description": "Multiplayer pong game built in NodeJS",
-  "main": "app.js",
+  "description": "Not your average pong",
+  "main": "server/app.js",
   "dependencies": {
     "express": "^4.15.3",
     "socket.io": "^2.0.3",
@@ -10,8 +10,20 @@
   },
   "devDependencies": {},
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Ceremity",
-  "license": "ISC"
+  "author": "Paul Rice, Maya Woodeshick, Kael Kirk",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kaelinator/pong.git"
+  },
+  "keywords": [
+    "pong"
+  ],
+  "bugs": {
+    "url": "https://github.com/Kaelinator/pong/issues"
+  },
+  "homepage": "https://github.com/Kaelinator/pong#readme"
 }
