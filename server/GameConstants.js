@@ -23,7 +23,7 @@ exports.POWERS = [
     name: "Ball Speed",
     abbr: "BS",
     expireTime: 0,
-    frequency: 0.2
+    spawnProbability: 0.2
   
   },
 
@@ -31,7 +31,7 @@ exports.POWERS = [
     name: "Increase Size",
     abbr: "IS",
     expireTime: 20, // seconds
-    frequency: 0.5
+    spawnProbability: 0.5
 
   }
 ];

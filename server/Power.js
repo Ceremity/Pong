@@ -14,8 +14,9 @@ var Power = function(x, y, name, abbr, expireTime) {
   this.abbr = abbr;
 
   this.targetPlayerId = null;
+  this.applied = false; // Whether or not the power has been applied to a player yet
 
-  this.state = 0; // 0 = inactive, 1 = active, 2 = expired
+  this.state = 0; // 0 = spawned, 1 = activated, 2 = expired
 };
 
 Power.prototype.update = function() {
@@ -24,24 +25,24 @@ Power.prototype.update = function() {
 
   switch (this.state) {
 
-    case 0: // if currently inactive
-      this.performInactive();
+    case 0: 
+      this.performSpawned();
       break;
 
-    case 1: // if currently active
-      this.performActive();
+    case 1:
+      this.performActivated();
       break;
 
     case 2:
-      this.performExpire();
+      this.performExpired();
       break;
   }
 
 };
 
-Power.prototype.performInactive = function() {
+Power.prototype.performSpawned = function() {
 
-  if (this.state === 0) { // if currently incative;
+  if (this.state === 0) { // if currently spawned;
 
     if (this.collidesWithBall(ball)) { // then check to see if collides with ball
 
@@ -51,7 +52,7 @@ Power.prototype.performInactive = function() {
   }
 };
 
-Power.prototype.performActive = function() {
+Power.prototype.performActivated = function() {
 
   if (this.elapsedTime > this.expireTime) { // if expired
 
@@ -61,7 +62,7 @@ Power.prototype.performActive = function() {
   this.elapsedTime += Constants.SECONDS_PER_FRAME;
 };
 
-Power.prototype.performExpire = function() {
+Power.prototype.performExpired = function() {
 
 };
 
