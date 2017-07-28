@@ -154,6 +154,7 @@ Game.prototype.applyPower = function(power, applying) {
 
           ball.xVelocity *= Constants.POWERS[power.id].params.decreaseBy;
           ball.yVelocity *= Constants.POWERS[power.id].params.decreaseBy;
+          console.log("Decreased " + power.name + " to " + ball.xVelocity + ", " + ball.yVelocity);
         }
       }
       break;

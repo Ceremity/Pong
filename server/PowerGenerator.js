@@ -24,10 +24,13 @@ PowerGenerator.prototype.update = function() {
 };
 
 PowerGenerator.prototype.removePower = function(power) {
+
  if (power.state === 2)  { // if expired
     // Remove from powers array
+
     var index = this.powers.indexOf(power);
     if (index > -1) {
+      console.log("Deleting " + power.name + ", id: " + power.id);
       this.powers.splice(index, 1);
     }
   }
@@ -35,6 +38,7 @@ PowerGenerator.prototype.removePower = function(power) {
 
 // Private Methods
 PowerGenerator.prototype.handleTime = function() {
+
  this.elapsedTime += Constants.SECONDS_PER_FRAME;
 }
 
@@ -42,6 +46,12 @@ PowerGenerator.prototype.spawn = function () {
 
   if (this.elapsedTime < 1)
     return;
+
+  // var currentdate = new Date();
+  // var datetime = currentdate.getHours() + ":"
+  //                 + currentdate.getMinutes() + ":"
+  //                 + currentdate.getSeconds();
+  // console.log(datetime);
 
   this.elapsedTime = 0; // reset time and spawn!
 
@@ -69,9 +79,10 @@ PowerGenerator.prototype.spawn = function () {
 }
 
 PowerGenerator.prototype.updatePowers = function() {
-  for (var i = 0; i < this.powers; i++) {
+  for (var i = 0; i < this.powers.length; i++) {
     var power = this.powers[i];
     power.update();
+    // console.log("Power update " + power.name);
   }
 }
 

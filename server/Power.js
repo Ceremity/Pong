@@ -28,38 +28,39 @@ Power.prototype.update = function() {
 
   switch (this.state) {
 
-    case 0:
-      this.performSpawned();
-      break;
+    // case 0:
+    //   this.performSpawned();
+    //   break;
 
     case 1:
       this.performActivated();
       break;
 
-    case 2:
-      this.performExpired();
-      break;
+    // case 2:
+    //   this.performExpired();
+    //   break;
   }
 
 };
 
-Power.prototype.performSpawned = function() {
-
-  if (this.state === 0) { // if currently spawned;
-
-    if (this.collidesWithBall(ball)) { // then check to see if collides with ball
-
-      this.state = 1; // so activate this power
-      this.targetPlayerId = ball.hitByPlayerId; // and store the player it applies to
-    }
-  }
-};
+// Power.prototype.performSpawned = function(ball) {
+//
+//   if (this.state === 0) { // if currently spawned;
+//
+//     if (this.collidesWithBall(ball)) { // then check to see if collides with ball
+//
+//       this.state = 1; // so activate this power
+//       this.targetPlayerId = ball.hitByPlayerId; // and store the player it applies to
+//     }
+//   }
+// };
 
 Power.prototype.performActivated = function() {
 
   if (this.elapsedTime > this.expireTime) { // if expired
 
     this.state = 2; // set to expired so PowerHandler can delete this
+    console.log(this.name + " expired!");
   }
 
   this.elapsedTime += Constants.SECONDS_PER_FRAME;
@@ -86,11 +87,11 @@ Power.prototype.collidesWithBalls = function(balls) {
     var ball = balls[i];
     if (this.collidesWithBall(ball)) {
 
-      console.log("collided");
+      // console.log("collided");
 
-      console.log("Players: " + this.targetPlayers.length);
+      // console.log("Players: " + this.targetPlayers.length);
 
-      console.log("balls: " + this.targetBalls.length + "ball Id: " + ball.id + " " + this.targetBalls.indexOf(ball.id));
+      // console.log("balls: " + this.targetBalls.length + "ball Id: " + ball.id + " " + this.targetBalls.indexOf(ball.id));
 
       if (this.targetBalls.indexOf(ball.id) == -1)  { // don't target the same ball more than once
 
