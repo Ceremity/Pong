@@ -28,7 +28,7 @@ exports.POWERS = [
     name: "Ball Speed",
     abbr: "BS",
     expireTime: 15, // seconds
-    spawnProbability: 10 / 60, // about 5 every minute
+    spawnProbability: 1 / 60,
 
     params: {
 
@@ -37,12 +37,18 @@ exports.POWERS = [
     }
   },
 
-  // {
-  //   id: 1,
-  //   name: "Increased Paddle",
-  //   abbr: "IP",
-  //   expireTime: 20, // seconds
-  //   spawnProbability: 0.01
-  //
-  // }
+  {
+    id: 1,
+    name: "Increased Paddle",
+    abbr: "IP",
+    expireTime: 20, // seconds
+    spawnProbability: 30 / 60,
+
+		params: {
+
+			increaseBy: -200,
+			decreaseBy: 200
+		}
+
+  }
 ];

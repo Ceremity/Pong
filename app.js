@@ -18,6 +18,7 @@ function loop() {
 
   // Loop through each game
   for (var i in games) {
+
     var game = games[i];
     game.update();
     game.emit();

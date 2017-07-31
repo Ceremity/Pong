@@ -44,7 +44,7 @@ Player.prototype.collidesWith = function(ball) {
 
   // take into account ball size for more accurate collission detection
   // IF ball is above top of paddle and below bottom of paddle
-  if (ball.x > this.x && ball.x < this.x +  this.width) {
+  if (ball.x > this.x && ball.x < this.x + this.width) {
 
     // The ball is in the same x plane as the paddle
     if (ball.y > this.y && ball.y < this.y + this.height) {

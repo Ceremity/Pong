@@ -64,17 +64,6 @@ Game.prototype.update = function() {
       // Apply powers
       this.handlePowers();
 
-      // if (Math.random() < 0.001) {
-
-      //   var x = Math.random() * Constants.GAME_WIDTH;
-      //   var y = Math.random() * Constants.GAME_HEIGHT;
-
-      //   var p = new Power(x, y, Constants.POWERS.B_SPEED, this);
-
-      //   this.powers.push(p);
-      //   console.log(p);
-      // }
-
       // Update Balls
       for (var i in this.balls) {
 
@@ -148,19 +137,28 @@ Game.prototype.applyPower = function(power, applying) {
 
           ball.xVelocity *= Constants.POWERS[power.id].params.increaseBy;
           ball.yVelocity *= Constants.POWERS[power.id].params.increaseBy;
-
-          console.log("Increased " + power.name + " to " + ball.xVelocity + ", " + ball.yVelocity);
         } else {
 
           ball.xVelocity *= Constants.POWERS[power.id].params.decreaseBy;
           ball.yVelocity *= Constants.POWERS[power.id].params.decreaseBy;
-          console.log("Decreased " + power.name + " to " + ball.xVelocity + ", " + ball.yVelocity);
         }
       }
       break;
 
     case 1: // Increased Paddle
 
+			for (var i = 0; i < power.targetPlayers.length; i++) {
+
+				var player = players[power.targetPlayers[i]];
+
+				if (applying) {
+
+					player.height += Constants.POWERS[power.id].params.increaseBy;
+				} else {
+
+					player.height += Constants.POWERS[power.id].params.decreaseBy;
+				}
+			}
       break;
 
     default:

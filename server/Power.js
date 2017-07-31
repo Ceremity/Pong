@@ -66,9 +66,9 @@ Power.prototype.performActivated = function() {
   this.elapsedTime += Constants.SECONDS_PER_FRAME;
 };
 
-Power.prototype.performExpired = function() {
-
-};
+// Power.prototype.performExpired = function() {
+//
+// };
 
 Power.prototype.collidesWithBall = function(ball) {
 
@@ -86,12 +86,6 @@ Power.prototype.collidesWithBalls = function(balls) {
 
     var ball = balls[i];
     if (this.collidesWithBall(ball)) {
-
-      // console.log("collided");
-
-      // console.log("Players: " + this.targetPlayers.length);
-
-      // console.log("balls: " + this.targetBalls.length + "ball Id: " + ball.id + " " + this.targetBalls.indexOf(ball.id));
 
       if (this.targetBalls.indexOf(ball.id) == -1)  { // don't target the same ball more than once
 
