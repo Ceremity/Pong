@@ -50,7 +50,6 @@ Game.prototype.update = function() {
       if (++this.countDown >= Constants.PREGAME_TIME * Constants.UPDATES_PER_SECOND)
         this.gameState = Constants.GAME_STATES.PLAYING;
 
-        this.powerGenerator.state = 1; // Turn the power handler ON
       break;
 
     case (Constants.GAME_STATES.PLAYING):
@@ -78,6 +77,12 @@ Game.prototype.update = function() {
           if (++this.player2.score >= Constants.WINNING_SCORE)
           this.end(this.player2);
         }
+
+				if (this.powerGenerator.state != 1) {
+
+					if (this.balls[i].hitByPlayerId != null)
+						this.powerGenerator.state = 1; // Turn the power handler ON
+				}
 
       }
       break;
@@ -160,6 +165,21 @@ Game.prototype.applyPower = function(power, applying) {
 				}
 			}
       break;
+
+		case 2:
+			for (var i = 0; i < power.targetPlayers.length; i++) {
+
+				var player = players[power.targetPlayers[i]];
+
+				if (applying) {
+
+					player.height += Constants.POWERS[power.id].params.increaseBy;
+				} else {
+
+					player.height += Constants.POWERS[power.id].params.decreaseBy;
+				}
+			}
+			break;
 
     default:
       console.log("Unimplemented power: " + power.name + ", id: " + power.id);

@@ -42,12 +42,27 @@ exports.POWERS = [
     name: "Increased Paddle",
     abbr: "IP",
     expireTime: 20, // seconds
+    spawnProbability: 1 / 60,
+
+		params: {
+
+			increaseBy: 20,
+			decreaseBy: -20
+		}
+
+  },
+
+  {
+    id: 2,
+    name: "Decreased Paddle",
+    abbr: "DP",
+    expireTime: 20, // seconds
     spawnProbability: 30 / 60,
 
 		params: {
 
-			increaseBy: -200,
-			decreaseBy: 200
+			increaseBy: -20,
+			decreaseBy: 20
 		}
 
   }
