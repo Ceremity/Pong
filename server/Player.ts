@@ -1,26 +1,31 @@
 
 import GameConfig from "./GameConfig"
-let gc = new GameConfig();
+import Ball from "./Ball"
 
-import B4ll from "./B4ll"
-
-export default class Pl4yer {
+export default class Player implements IGameObject {
     id:any;
     name:string;
-    gameid:string;
+    gameId:string;
 
     x:number;
     y:number;
     score:number = 0;
 
-    width:number = gc.PaddleWidth;
-    height:number = gc.PaddleHeight;
-    speed:number = gc.PaddleSpeed;
+    width:number = GameConfig.PaddleWidth;
+    height:number = GameConfig.PaddleHeight;
+    speed:number = GameConfig.PaddleSpeed;
 
     pressingUp:boolean = false;
     pressingDown: boolean = false;
 
-    public update(): void{
+    public init(): void {
+        this.gameId = this.id;
+        this.x = 10;
+        this.y = GameConfig.GameHeight / 2 - GameConfig.PaddleHeight / 2;
+        this.speed = GameConfig.PaddleSpeed;
+    }
+
+    public update(): void {
         if (this.pressingUp) {
             this.y -= this.speed;
 
@@ -32,13 +37,13 @@ export default class Pl4yer {
           if (this.pressingDown) {
             this.y += this.speed;
 
-            if (this.y + this.height > gc.GameHeight) {
-                this.y = gc.GameHeight - this.height;
+            if (this.y + this.height > GameConfig.GameHeight) {
+                this.y = GameConfig.GameHeight - this.height;
             }
         }
     }
 
-    public collidesWith(ball: B4ll):boolean {
+    public collidesWith(ball: Ball):boolean {
         // TODO: take into account ball size for more accurate collission detection
         
         // IF ball is above top of paddle and below bottom of paddle

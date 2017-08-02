@@ -1,8 +1,7 @@
 import GameConfig from "./GameConfig"
-let gc = new GameConfig();
-import B4ll from "./B4ll"
+import Ball from "./Ball"
 
-export default class Pow3r {
+export default class Power implements IGameObject {
     id:number;
     name:string;
     abbr:string;
@@ -13,10 +12,10 @@ export default class Pow3r {
     elapsedTime:number = 0;
     expireTime:number;
 
-    size:number = gc.PowerSize;
+    size:number = GameConfig.PowerSize;
 
     targetPlayers = [];
-    targetBalls:Array<B4ll> = [];
+    targetBalls:Array<Ball> = [];
 
     state:PowerStateEnum = PowerStateEnum.Spawned;
 
@@ -29,14 +28,14 @@ export default class Pow3r {
         this.expireTime = expireTime;
     }
 
-    private collidesWithBall(ball:B4ll):boolean {
+    private collidesWithBall(ball:Ball):boolean {
         var dx = this.x - ball.x;
         var dy = this.y - ball.y;
         var distance = Math.sqrt(dx * dx + dy * dy);
         return (distance < (this.size + ball.size)); // collision!
     }
 
-    public collidesWithBalls(balls:Array<B4ll>):boolean {
+    public collidesWithBalls(balls:Array<Ball>):boolean {
         for (let ball of balls) {
             if (this.collidesWithBall(ball)) {
                 if (this.targetBalls.indexOf(ball) === -1) {
@@ -64,6 +63,6 @@ export default class Pow3r {
             this.state = PowerStateEnum.Expired;
         }
 
-        this.elapsedTime += gc.SecondsPerFrame;
+        this.elapsedTime += GameConfig.SecondsPerFrame;
     }
 }

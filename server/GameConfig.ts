@@ -1,25 +1,25 @@
 
 export default class GameConfig {
 
-    PregameTime:number = 3; // in seconds
-    UpdatesPerSecond:number = 30;
-    MillisecondsPerFrame:number = 1000 / this.UpdatesPerSecond;
-    SecondsPerFrame:number = this.MillisecondsPerFrame / 1000;
+    static PregameTime:number = 3; // in seconds
+    static UpdatesPerSecond:number = 30;
+    static MillisecondsPerFrame:number = 1000 / GameConfig.UpdatesPerSecond;
+    static SecondsPerFrame:number = GameConfig.MillisecondsPerFrame / 1000;
 
-    GameWidth:number = 800;
-    GameHeight:number = 600;
+    static GameWidth:number = 800;
+    static GameHeight:number = 600;
 
-    PaddleWidth:number = 10;
-    PaddleHeight:number = 75;
-    BallSize:number = 5;
+    static PaddleWidth:number = 10;
+    static PaddleHeight:number = 75;
+    static BallSize:number = 5;
 
-    PaddleSpeed:number = 7;
-    BallSpeed:number = 7;
+    static PaddleSpeed:number = 7;
+    static BallSpeed:number = 7;
 
-    WinningScore:number = 11;
-    PowerSize:number = 20;
+    static WinningScore:number = 11;
+    static PowerSize:number = 20;
 
-        powers = [
+    static powers = [
         {
             id: 0,
             name: "Ball Speed",

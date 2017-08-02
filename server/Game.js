@@ -25,7 +25,7 @@ Game.prototype.init = function() {
 
   console.log('[' + this.id + '] Game created. Player 1: ' + this.player1.name + ' vs. Player 2: ' + this.player2.name);
 
-  /* initialize player1 */
+   /* initialize player1 */
   this.player1.gameId = this.id;
   this.player1.x = 10;
   this.player1.y = Constants.GAME_HEIGHT / 2 - Constants.PADDLE_HEIGHT / 2;

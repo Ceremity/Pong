@@ -1,0 +1,3 @@
+interface IGameObject {
+    update():any;
+}
