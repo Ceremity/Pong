@@ -1,16 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var GameConfig_1 = require("./GameConfig");
-var gc = new GameConfig_1.default();
 var Player = (function () {
-    function Player() {
+    function Player(id, name) {
         this.score = 0;
-        this.width = gc.PaddleWidth;
-        this.height = gc.PaddleHeight;
-        this.speed = gc.PaddleSpeed;
+        this.width = GameConfig_1.default.PaddleWidth;
+        this.height = GameConfig_1.default.PaddleHeight;
+        this.speed = GameConfig_1.default.PaddleSpeed;
         this.pressingUp = false;
         this.pressingDown = false;
+        this.id = id;
+        this.name = name;
     }
+    Player.prototype.init = function () {
+        this.gameId = this.id;
+        this.x = 10;
+        this.y = GameConfig_1.default.GameHeight / 2 - GameConfig_1.default.PaddleHeight / 2;
+        this.speed = GameConfig_1.default.PaddleSpeed;
+    };
     Player.prototype.update = function () {
         if (this.pressingUp) {
             this.y -= this.speed;
@@ -20,8 +27,8 @@ var Player = (function () {
         }
         if (this.pressingDown) {
             this.y += this.speed;
-            if (this.y + this.height > gc.GameHeight) {
-                this.y = gc.GameHeight - this.height;
+            if (this.y + this.height > GameConfig_1.default.GameHeight) {
+                this.y = GameConfig_1.default.GameHeight - this.height;
             }
         }
     };

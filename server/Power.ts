@@ -8,7 +8,7 @@ export default class Power implements IGameObject {
 
     x:number;
     y:number;
-    
+
     elapsedTime:number = 0;
     expireTime:number;
 
@@ -19,8 +19,9 @@ export default class Power implements IGameObject {
 
     state:PowerStateEnum = PowerStateEnum.Spawned;
 
-    constructor(id:number, x:number, y:number, name:string, abbr:string, expireTime:number){
-        this.id = id;
+    constructor(id:number, x:number, y:number, name:string, abbr:string, expireTime:number) {
+
+				this.id = id;
         this.x = x;
         this.y = y;
         this.name = name;

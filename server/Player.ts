@@ -18,6 +18,12 @@ export default class Player implements IGameObject {
     pressingUp:boolean = false;
     pressingDown: boolean = false;
 
+		constructor(id:number, name:string) {
+
+			this.id = id;
+			this.name = name;
+		}
+
     public init(): void {
         this.gameId = this.id;
         this.x = 10;
@@ -45,7 +51,7 @@ export default class Player implements IGameObject {
 
     public collidesWith(ball: Ball):boolean {
         // TODO: take into account ball size for more accurate collission detection
-        
+
         // IF ball is above top of paddle and below bottom of paddle
         if (ball.x > this.x && ball.x < this.x + this.width) {
 

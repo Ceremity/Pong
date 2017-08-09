@@ -2,7 +2,7 @@
 require('../app.js');
 var Player = require('./Player.js');
 var Game = require('./Game.js');
-var Constants = require('./GameConstants.js');
+var Constants = require('./GameConfig.js');
 
 /**
  * Initialize Express server

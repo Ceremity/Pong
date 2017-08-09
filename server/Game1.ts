@@ -7,7 +7,7 @@ import PowerGenerator from "./PowerGenerator"
 import Player from "./Player"
 
 export default class Game implements IGameObject {
-    
+
     id:any = uuidV4();
     player1:Player;
     player2:Player;
@@ -28,7 +28,7 @@ export default class Game implements IGameObject {
         /* initialize players */
         this.player1.init();
         this.player2.init();
-        
+
         /* initialize a new ball */
         this.balls = []; // Clear all balls
         var ball = new Ball(this.player1, this.player2);

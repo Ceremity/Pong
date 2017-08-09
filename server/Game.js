@@ -1,5 +1,5 @@
 
-var Constants = require('./GameConstants.js');
+var Constants = require('./GameConfig.js');
 var Ball = require('./Ball.js');
 var Power = require('./Power.js');
 var uuidV4 = require('uuid/v4');

@@ -1,7 +1,7 @@
 
 /* importing modules */
 var ConnectionHandler = require('./server/ConnectionHandler.js');
-var Constants = require('./server/GameConstants.js');
+var Constants = require('./server/GameConfig.js');
 
 sockets = {}; // socket connections to the server
 players = {}; // all players

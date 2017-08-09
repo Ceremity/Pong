@@ -1,11 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var GameConfig_1 = require("./GameConfig");
-var gc = new GameConfig_1.default();
 var Power = (function () {
     function Power(id, x, y, name, abbr, expireTime) {
         this.elapsedTime = 0;
-        this.size = gc.PowerSize;
+        this.size = GameConfig_1.default.PowerSize;
         this.targetPlayers = [];
         this.targetBalls = [];
         this.state = 0 /* Spawned */;
@@ -46,7 +45,7 @@ var Power = (function () {
         if (this.elapsedTime > this.expireTime) {
             this.state = 2 /* Expired */;
         }
-        this.elapsedTime += gc.SecondsPerFrame;
+        this.elapsedTime += GameConfig_1.default.SecondsPerFrame;
     };
     return Power;
 }());
