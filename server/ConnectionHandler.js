@@ -37,19 +37,21 @@ exports.initSocket = function() {
   io.sockets.on('connection', function(socket) {
 
       sockets[socket.id] = socket;
-      console.log('[' + socket.id + '] Unknown connected.');
+      console.log(`[${socket.id}] Unknown connected.`);
 
-      socket.on('join', function(data){
+      socket.on('join', function(data) {
+        
           var player = new Player(socket.id, data.name);
           players[socket.id] = player;
 
-          console.log('[' + socket.id + '] ' + players[socket.id].name + ' joined.');
+          console.log(`[${socket.id}] ${player[socket.id].name} joined.`);
 
           // Check to see if there is another player waiting for a game
-          for (var i in players){
-              if (i != socket.id){ // don't want to count the current player as someone looking for a game
+          for (var i in players) {
+              if (i != socket.id) { // don't want to count the current player as someone looking for a game
+                
                   var p = players[i];
-                  if (p.gameId === null){
+                  if (p.gameId === null) {
                       // Found someone looking for a game!
                       var game = new Game(p, player);
                       game.init();
@@ -61,22 +63,27 @@ exports.initSocket = function() {
 
       });
 
-      socket.on('keyPress', function(data){
+      /* clients will emit a 'keyPress' packet */
+      socket.on('keyPress', function(data) {
 
           if (players[socket.id] != null) {
               var player = players[socket.id];
 
               if (data.input === 'up') {
+                
                   player.pressingUp = data.state;
               }
+            
                if (data.input === 'down') {
+                 
                   player.pressingDown = data.state;
               }
 
           }
       });
 
-      socket.on('disconnect', function(data){
+      /* clients will send a 'disconnect' packet */
+      socket.on('disconnect', function(data) {
 
           if (players[socket.id] != null) {
 
@@ -90,11 +97,11 @@ exports.initSocket = function() {
                 game.end(winner);
             }
 
-            console.log('[' + socket.id + '] ' + player.name + ' disconnected.');
+            console.log(`[${socket.id}] ${player.name} disconnected.`);
             delete sockets[socket.id];
           } else {
             
-            console.log('[' + socket.id + '] Unknown disconnected.');
+            console.log(`[${socket.id}] Unknown disconnected.`);
             delete sockets[socket.id];
           }
       });
